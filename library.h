@@ -36,7 +36,8 @@
  *       str,
  *       format
  *     },
- *     __gc=func(self){~self();}
+ *     __gc=func(self){~self();},
+ *     __pairs
  *   }
  */
 

@@ -103,6 +103,25 @@ namespace match_results{
 		lua_gettable(L,lua_upvalueindex(1));
 		return 1;
 	}
+	int pairs_func(lua_State *L){
+		auto cm=(std::cmatch*)luaL_checkudata(L,1,match_results_tname);
+		int index=luaL_checkinteger(L,2);
+		if(index==cm->size()-1){
+			lua_pushnil(L);
+			return 1;
+		}else{
+			lua_pushinteger(L,index+1);
+			const string&s=cm->str(index+1);
+			lua_pushlstring(L,s.c_str(),s.length());
+			return 2;
+		}
+	}
+	int __pairs(lua_State *L){
+		lua_pushcfunction(L,pairs_func);
+		lua_pushvalue(L,1);
+		lua_pushinteger(L,-1);
+		return 3;
+	}
 	int create_metatable(lua_State *L){
 		luaL_newmetatable(L,match_results_tname);
 
@@ -112,6 +131,9 @@ namespace match_results{
 
 		lua_pushcfunction(L,__gc);
 		lua_setfield(L,-2,"__gc");
+
+		lua_pushcfunction(L,__pairs);
+		lua_setfield(L,-2,"__pairs");
 
 		lua_pop(L,1);
 		return 0;

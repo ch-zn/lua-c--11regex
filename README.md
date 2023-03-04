@@ -53,6 +53,8 @@ for i,j in pairs(match) do print(i,j) end
 
 ## 编译
 
+Lua版本至少为5.4\
+(其实也可以兼容5.3,把lua_newuserdatauv换成lua_newuserdata,lua_s/getiuservalue换成lua_s/getuservalue就行,懒得改)
 ```
 cmake -DLUA_LIB_PATH=lua库文件所在的目录 -DLUA_INCLUDE_PATH=lua头文件所在目录
 make

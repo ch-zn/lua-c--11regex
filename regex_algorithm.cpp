@@ -20,9 +20,11 @@ namespace regex_algorithm{
 		auto cm=(std::cmatch*)lua_touserdata(L,-1);
 		lua_pushvalue(L,2);
 		lua_setiuservalue(L,-2,1);	// 防止s被Lua回收
-		lua_pushboolean(L,std::regex_match(s,s+slen,*cm,*r,flag));
-		lua_rotate(L,-2,1);
-		return 2;
+		if(!std::regex_match(s,s+slen,*cm,*r,flag)){
+			lua_pop(L,1);
+			lua_pushboolean(L,false);
+		}
+		return 1;
 	}
 	int search(lua_State *L){
 		auto r=(std::regex*)luaL_checkudata(L,1,regex_tname);
@@ -35,9 +37,11 @@ namespace regex_algorithm{
 		lua_pushvalue(L,2);
 		lua_setiuservalue(L,-2,1);	// 防止s被Lua回收
 		if(lua_isinteger(L,3))flag=(decltype(flag))lua_tointeger(L,3);
-		lua_pushboolean(L,std::regex_search(s,s+slen,*cm,*r,flag));
-		lua_rotate(L,-2,1);
-		return 2;
+		if(!std::regex_search(s,s+slen,*cm,*r,flag)){
+			lua_pop(L,1);
+			lua_pushboolean(L,false);
+		}
+		return 1;
 	}
 	int replace(lua_State *L){
 		auto r=(std::regex*)luaL_checkudata(L,1,regex_tname);

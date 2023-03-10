@@ -3,6 +3,11 @@ project(regex)
 
 set(CMAKE_CXX_STANDARD 11)
 include_directories(${LUA_INCLUDE_PATH})
+if(DEFINED BOOST_PATH)
+    add_compile_options(-DUSE_BOOST)
+    include_directories(${BOOST_PATH})
+endif()
+
 link_libraries(lua)
 link_directories(${LUA_LIB_PATH})
 

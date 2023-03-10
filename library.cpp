@@ -10,8 +10,8 @@
 
 
 extern"C" __declspec(dllexport) int luaopen_regex (lua_State *L){
-	regex::create_metatable(L);
-	match_results::create_metatable(L);
+	lregex::create_metatable(L);
+	lmatch_results::create_metatable(L);
 
 	lua_createtable(L,0,3);
 	pushTable_syntax_option(L);
@@ -21,7 +21,7 @@ extern"C" __declspec(dllexport) int luaopen_regex (lua_State *L){
 	pushTable_error_type(L);
 	lua_setfield(L,-2,"error");
 	lua_createtable(L,0,1);
-	lua_pushcfunction(L,regex::__new);
+	lua_pushcfunction(L,lregex::__new);
 	lua_setfield(L,-2,"__call");
 	lua_setmetatable(L,-2);
 	return 1;

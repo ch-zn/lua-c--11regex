@@ -3,7 +3,7 @@
  * 将std::regex_constants的常量打包进table中
  * MIT License
  */
-#include <regex>
+#include "regex.hpp"
 #include <lua.hpp>
 
 using namespace std;
